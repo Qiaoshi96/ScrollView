@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff6677"
+        android:gravity="center"
+        android:text="这是标题" />
+    <!--显示当前筛选条件-->
+    <include
+        android:id="@+id/myshai"
+        layout="@layout/shailayout"
+        android:visibility="gone" />
+    <!--RecycleView多条目-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myRecycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
