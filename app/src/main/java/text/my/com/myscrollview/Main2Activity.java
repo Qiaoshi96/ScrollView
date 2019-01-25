@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.jaren.lib.view.LikeView;
 import com.wanglu.lib.juejin.WJueJinLikeAnim;
 
 import static text.my.com.myscrollview.R.mipmap.ic_launcher;
@@ -28,12 +29,15 @@ public class Main2Activity extends AppCompatActivity {
     boolean isLike;
     boolean isClick;
 
+    LikeView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         this.myText = findViewById(R.id.htmltext);
         this.imageView = findViewById(R.id.my_dianzan);
+        this.lv = findViewById(R.id.lv_icon);
         if (content.contains("来")) {
             content = content.replace("来", "<font color=\'#FA800A\'>来</font>");
         }
@@ -51,12 +55,21 @@ public class Main2Activity extends AppCompatActivity {
             isClick = true;
 
 
+
             }
         });
 
         if (isClick){
             this.imageView.setImageResource(R.drawable.dianzan);
+            isClick = false;
         }
+
+        lv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lv.toggle();
+            }
+        });
 
 
     }
