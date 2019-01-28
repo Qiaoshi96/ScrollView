@@ -9,95 +9,45 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import text.my.com.myscrollview.com.my.dome.PinnedHeaderAdapter;
+import text.my.com.myscrollview.com.my.dome.PinnedHeaderItemDecoration;
+import text.my.com.myscrollview.com.my.dome.PinnedHeaderRecyclerView;
+
+import static android.widget.Toast.LENGTH_SHORT;
+
+//结束？
+//noway
+
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView myRecycler;
+    //private RecyclerView myRecycler;
+    private PinnedHeaderRecyclerView mRecyclerView;
     View myView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myRecycler = findViewById(R.id.myRecycle);
+        mRecyclerView = findViewById(R.id.myRecycle);
         myView = findViewById(R.id.myshai);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        myRecycler.setLayoutManager(linearLayoutManager);
-        myRecycler.setAdapter(new MyAdapter());
-
-        //监听RecycleView滑动的距离
-        myRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                if (layoutManager instanceof LinearLayoutManager) {
-                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                    //去判断当前可见的是否是1如果是的话
-                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                    int lastItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-
-                    int firstCom = linearLayoutManager.findFirstCompletelyVisibleItemPosition();;
-
-                    Log.e("TAG", "firstItemPosition" + firstItemPosition + "======" +firstCom);
-                    if (firstCom > 1) {
-                        myView.setVisibility(View.VISIBLE);
-                    } else {
-                        myView.setVisibility(View.GONE);
-                    }
-
-
-                }
-
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();//获取LayoutManager
-
-
-                //经过测试LinearLayoutManager和GridLayoutManager有以下的方法,这里只针对LinearLayoutManager
-                if (manager instanceof LinearLayoutManager) {
-                    //经测试第一个完整的可见的item位置，若为0则是最上方那个;在item超过屏幕高度的时候只有第一个item出现的时候为0 ，其他时候会是一个负的值
-                    int findFirstCompletelyVisibleItemPosition = ((LinearLayoutManager) manager).findFirstCompletelyVisibleItemPosition();
-                    //最后一个完整的可见的item位置
-                    int findLastCompletelyVisibleItemPosition = ((LinearLayoutManager) manager).findLastCompletelyVisibleItemPosition();
-                    //第一个可见的位置
-                    int findFirstVisibleItemPosition = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
-                    //最后一个可见的位置
-                    int findLastVisibleItemPosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
-
-                    int topPosition = (recyclerView == null || recyclerView.getChildCount() == 1) ? 0 : recyclerView.getChildAt(1).getTop();
-
-                    int top = recyclerView.getChildAt(1).getTop();
-                    int childCount = recyclerView.getChildCount();
-
-//                    if (topPosition<=10){
-//                        myView.setVisibility(View.GONE);
-//                    }else {
-//                        myView.setVisibility(View.GONE);
-//                    }
-                    Log.e("TAG", "findFirstVisibleItemPosition"+findFirstVisibleItemPosition +"++++++++++"+top+"---"+childCount);
-
-//                    if (findFirstCompletelyVisibleItemPosition >=1) {
-//                        myView.setVisibility(View.VISIBLE);
-//                    } else {
-//                        myView.setVisibility(View.GONE);
-//                    }
-//
-
-
-
-                }
-            }
-        });
-
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(new MyAdapter());
+        mRecyclerView.addItemDecoration(new PinnedHeaderItemDecoration());//增加装饰器样式
+        //增加装饰器点击事件
+//        mRecyclerView.setOnPinnedHeaderClickListener(new PinnedHeaderRecyclerView.OnPinnedHeaderClickListener() {
+//            @Override
+//            public void onPinnedHeaderClick(int adapterPosition) {
+//                Toast.makeText(MainActivity.this, "点击了悬浮标题 position = " + adapterPosition, LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
-    class MyAdapter extends RecyclerView.Adapter {
+    class MyAdapter extends PinnedHeaderAdapter<RecyclerView.ViewHolder> {
         int Banner = 1;
         int Notice = 2;
         int Content = 3;
@@ -122,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
+
         }
 
         //多条目处理
@@ -136,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return 50;
+        }
+
+        //增加头部装饰对方法
+        @Override
+        public boolean isPinnedPosition(int position) {
+            return getItemViewType(position) == Notice;
         }
     }
 

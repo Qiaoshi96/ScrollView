@@ -64,12 +64,20 @@ public class Main2Activity extends AppCompatActivity {
             isClick = false;
         }
 
-        lv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lv.toggle();
-            }
-        });
+       // lv.setDefaultIcon(getDrawable(R.drawable.dianza));//默认
+       // lv.setCheckedIcon(getResources().getDrawable(R.drawable.xihuan_2));//点击
+
+        lv.setChecked(false);//默认点赞
+       // lv.setCheckedWithoutAnimator(true);
+
+
+//        lv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                lv.toggle();
+//                //lv.setCheckedIcon(getResources().getDrawable(R.drawable.xihuan_2));//点击
+//            }
+//        });
 
 
     }

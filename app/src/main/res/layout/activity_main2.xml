@@ -37,8 +37,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:ringColor="#ff44ff00"
         app:defaultColor="#ffcccccc"
-        app:checkedLikeIconRes="@drawable/dianza"
-        app:defaultLikeIconRes="@drawable/xihuan_2"
+        app:checkedLikeIconRes="@drawable/yixihuan_2"
+        app:defaultLikeIconRes="@drawable/xihuan_bai"
         app:cirRadius="14dp"
         app:cycleTime="2000"/>
 
